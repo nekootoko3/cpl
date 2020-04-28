@@ -2,9 +2,13 @@
 
 source "https://rubygems.org"
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 group :development, :test do
-  gem "rspec", "~> 3.9"
   gem "codecov", "~> 0.1.16"
+  gem "rspec", "~> 3.9"
+end
+
+group :development do
+  gem 'rubocop', require: false
 end
