@@ -15,7 +15,7 @@ class PriorityQueue
 
   # @param value [Integer | Array<Integer, Any>]
   def push(value)
-    node = value.is_a?(Array) ? Node.new(value[0], value[(1..)]) : Node.new(value, nil)
+    node = value.is_a?(Array) ? Node.new(value[0], value[1..-1]) : Node.new(value, nil)
     @heap << node
 
     current = @heap.size - 1
@@ -113,7 +113,7 @@ class PriorityQueue
     return [] if array.nil? || array.empty?
 
     if array.all? { |a| a.is_a?(Array) }
-      array.map { |a| Node.new(a[0], a[(1..)]) }
+      array.map { |a| Node.new(a[0], a[1..-1]) }
     else
       array.map { |n| Node.new(n) }
     end
