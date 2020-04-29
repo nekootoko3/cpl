@@ -14,40 +14,40 @@ RSpec.describe PriorityQueue do
     context "with min heap" do
       it "works expectedly" do
         pq = PriorityQueue.new([3, 2, 9], heap_type: :min)
-        expect(pq.heap_pop).to eq 2
-        expect(pq.heap_pop).to eq 3
-        pq.heap_push(1)
-        pq.heap_push(5)
-        pq.heap_push(1)
-        pq.heap_push(14)
-        expect(pq.heap_pop).to eq 1
-        expect(pq.heap_pop).to eq 1
-        expect(pq.heap_pop).to eq 5
-        expect(pq.heap_pop).to eq 9
-        expect(pq.heap_pop).to eq 14
-        expect(pq.heap_pop).to be_nil
-        pq.heap_push(1)
-        expect(pq.heap_pop).to eq 1
+        expect(pq.pop).to eq 2
+        expect(pq.pop).to eq 3
+        pq.push(1)
+        pq.push(5)
+        pq.push(1)
+        pq.push(14)
+        expect(pq.pop).to eq 1
+        expect(pq.pop).to eq 1
+        expect(pq.pop).to eq 5
+        expect(pq.pop).to eq 9
+        expect(pq.pop).to eq 14
+        expect(pq.pop).to be_nil
+        pq.push(1)
+        expect(pq.pop).to eq 1
       end
     end
 
     context "with max heap" do
       it "works expectedly" do
         pq = PriorityQueue.new([3, 2, 9], heap_type: :max)
-        expect(pq.heap_pop).to eq 9
-        expect(pq.heap_pop).to eq 3
-        pq.heap_push(14)
-        pq.heap_push(5)
-        pq.heap_push(1)
-        pq.heap_push(14)
-        expect(pq.heap_pop).to eq 14
-        expect(pq.heap_pop).to eq 14
-        expect(pq.heap_pop).to eq 5
-        expect(pq.heap_pop).to eq 2
-        expect(pq.heap_pop).to eq 1
-        expect(pq.heap_pop).to be_nil
-        pq.heap_push(1)
-        expect(pq.heap_pop).to eq 1
+        expect(pq.pop).to eq 9
+        expect(pq.pop).to eq 3
+        pq.push(14)
+        pq.push(5)
+        pq.push(1)
+        pq.push(14)
+        expect(pq.pop).to eq 14
+        expect(pq.pop).to eq 14
+        expect(pq.pop).to eq 5
+        expect(pq.pop).to eq 2
+        expect(pq.pop).to eq 1
+        expect(pq.pop).to be_nil
+        pq.push(1)
+        expect(pq.pop).to eq 1
       end
     end
   end
@@ -62,35 +62,35 @@ RSpec.describe PriorityQueue do
     context "with min heap" do
       it "works expectedly" do
         pq = PriorityQueue.new([n1, n5], heap_type: :min)
-        expect(pq.heap_pop).to eq n1
-        expect(pq.heap_pop).to eq n5
-        expect(pq.heap_pop).to be_nil
-        pq.heap_push(n5)
-        pq.heap_push(n1)
-        pq.heap_push(n3)
-        pq.heap_push(n1)
-        expect(pq.heap_pop).to eq n1
-        expect(pq.heap_pop).to eq n1
-        expect(pq.heap_pop).to eq n3
-        expect(pq.heap_pop).to eq n5
-        expect(pq.heap_pop).to be_nil
+        expect(pq.pop).to eq n1
+        expect(pq.pop).to eq n5
+        expect(pq.pop).to be_nil
+        pq.push(n5)
+        pq.push(n1)
+        pq.push(n3)
+        pq.push(n1)
+        expect(pq.pop).to eq n1
+        expect(pq.pop).to eq n1
+        expect(pq.pop).to eq n3
+        expect(pq.pop).to eq n5
+        expect(pq.pop).to be_nil
       end
     end
     context "with max heap" do
       it "works expectedly" do
         pq = PriorityQueue.new([n1, n5], heap_type: :max)
-        expect(pq.heap_pop).to eq n5
-        expect(pq.heap_pop).to eq n1
-        expect(pq.heap_pop).to be_nil
-        pq.heap_push(n5)
-        pq.heap_push(n1)
-        pq.heap_push(n3)
-        pq.heap_push(n5)
-        expect(pq.heap_pop).to eq n5
-        expect(pq.heap_pop).to eq n5
-        expect(pq.heap_pop).to eq n3
-        expect(pq.heap_pop).to eq n1
-        expect(pq.heap_pop).to be_nil
+        expect(pq.pop).to eq n5
+        expect(pq.pop).to eq n1
+        expect(pq.pop).to be_nil
+        pq.push(n5)
+        pq.push(n1)
+        pq.push(n3)
+        pq.push(n5)
+        expect(pq.pop).to eq n5
+        expect(pq.pop).to eq n5
+        expect(pq.pop).to eq n3
+        expect(pq.pop).to eq n1
+        expect(pq.pop).to be_nil
       end
     end
   end
@@ -102,5 +102,9 @@ RSpec.describe PriorityQueue do
     it { expect(pq0.length).to eq 0 }
     it { expect(pq3.size).to eq 3 }
     it { expect(pq3.length).to eq 3 }
+  end
+
+  describe "#empty?" do
+    it { expect(PriorityQueue.new.empty?).to be_truthy }
   end
 end

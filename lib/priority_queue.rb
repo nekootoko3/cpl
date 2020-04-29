@@ -14,7 +14,7 @@ class PriorityQueue
   end
 
   # @param value [Integer | Array<Integer, Any>]
-  def heap_push(value)
+  def push(value)
     node = value.is_a?(Array) ? Node.new(value[0], value[(1..)]) : Node.new(value, nil)
     @heap << node
 
@@ -30,7 +30,7 @@ class PriorityQueue
   end
 
   # @return [Integer | Array<Integer, Any>]
-  def heap_pop
+  def pop
     return if @heap.empty?
 
     res = @heap.shift
@@ -47,6 +47,10 @@ class PriorityQueue
     @heap.size
   end
   alias size length
+
+  def empty?
+    @heap.empty?
+  end
 
   private
 
