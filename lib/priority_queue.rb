@@ -7,70 +7,55 @@ class PriorityQueue
     raise ArgumentError, "heap type is invalid: #{heap_type}" unless HEAP_TYPES.include?(heap_type)
     raise ArgumentError, "array is invalid: #{array}" unless valid_array?(array)
 
-    @heap = convert_to_nodes(array)
+    @array = build_array(array)
     @heap_type = heap_type
 
-    build_heap! unless @heap.empty?
+    build_heap! unless @array.empty?
   end
 
   # @param value [Integer | Array<Integer, Any>]
   def push(value)
-    node = value.is_a?(Array) ? Node.new(value[0], value[1..-1]) : Node.new(value, nil)
-    @heap << node
+    v = value.is_a?(Array) ? value : [value]
+    @array << v
 
-    current = @heap.size - 1
+    current = @array.size - 1
     parent = (current - 1) / 2
     while parent >= 0
-      break if @heap_type == :min && @heap[parent].key < @heap[current].key
-      break if @heap_type == :max && @heap[parent].key > @heap[current].key
+      break if @heap_type == :min && @array[parent][0] < @array[current][0]
+      break if @heap_type == :max && @array[parent][0] > @array[current][0]
 
-      @heap[current], @heap[parent] = @heap[parent], @heap[current]
+      @array[current], @array[parent] = @array[parent], @array[current]
       parent, current = (current - 1) / 2, parent
     end
   end
 
   # @return [Integer | Array<Integer, Any>]
   def pop
-    return if @heap.empty?
+    return if @array.empty?
 
-    res = @heap.shift
+    res = @array.shift
 
-    unless @heap.empty?
-      @heap.unshift(@heap.pop)
-      heapify!(0) unless @heap.empty?
+    unless @array.empty?
+      @array.unshift(@array.pop)
+      heapify!(0) unless @array.empty?
     end
 
-    res.value.nil? ? res.key : res.to_a.flatten
+    res.size == 1 ? res[0] : res
   end
 
   def length
-    @heap.size
+    @array.size
   end
   alias size length
 
   def empty?
-    @heap.empty?
+    @array.empty?
   end
 
   private
 
-  Node = Struct.new(:key, :value) do
-    include Comparable
-
-    def <=>(other)
-      return unless other
-      return if key.nil? || other&.key.nil?
-
-      case key - other.key
-      when proc { |n| n < 0 }; -1
-      when proc { |n| n > 0 }; 1
-      else; 0
-      end
-    end
-  end
-
   def build_heap!
-    (@heap.size/2).downto(0) { |i| heapify!(i) }
+    (@array.size/2).downto(0) { |i| heapify!(i) }
   end
 
   def heapify!(current)
@@ -80,24 +65,24 @@ class PriorityQueue
   def min_heapify!(current)
     left = current*2+1
     right = current*2+2
-    smallest_value = [@heap[current].key, @heap[left]&.key, @heap[right]&.key].compact.min
+    smallest_value = [@array[current][0], @array[left]&.fetch(0, nil), @array[right]&.fetch(0, nil)].compact.min
 
-    return if smallest_value == @heap[current].key
+    return if smallest_value == @array[current][0]
 
-    swap_idx = smallest_value == @heap[left].key ? left : right
-    @heap[swap_idx], @heap[current] = @heap[current], @heap[swap_idx]
+    swap_idx = smallest_value == @array[left][0] ? left : right
+    @array[swap_idx], @array[current] = @array[current], @array[swap_idx]
     min_heapify!(swap_idx)
   end
 
   def max_heapify!(current)
     left = current*2+1
     right = current*2+2
-    largest_value = [@heap[current].key, @heap[left]&.key, @heap[right]&.key].compact.max
+    largest_value = [@array[current][0], @array[left]&.fetch(0, nil), @array[right]&.fetch(0, nil)].compact.max
 
-    return if largest_value == @heap[current].key
+    return if largest_value == @array[current][0]
 
-    swap_idx = largest_value == @heap[left].key ? left : right
-    @heap[swap_idx], @heap[current] = @heap[current], @heap[swap_idx]
+    swap_idx = largest_value == @array[left][0] ? left : right
+    @array[swap_idx], @array[current] = @array[current], @array[swap_idx]
     max_heapify!(swap_idx)
   end
 
@@ -109,13 +94,11 @@ class PriorityQueue
       array.all? { |el| el.is_a?(Integer) }
   end
 
-  def convert_to_nodes(array)
-    return [] if array.nil? || array.empty?
-
-    if array.all? { |a| a.is_a?(Array) }
-      array.map { |a| Node.new(a[0], a[1..-1]) }
-    else
-      array.map { |n| Node.new(n) }
+  def build_array(array)
+    case array
+    when nil; []
+    when proc { |arr| arr.all? { |el| el.is_a?(Array) } }; array
+    else; array.map { |el| [el] }
     end
   end
 end
