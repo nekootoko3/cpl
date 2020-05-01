@@ -53,11 +53,11 @@ RSpec.describe PriorityQueue do
   end
 
   context "when each node is array" do
-    let(:n1) { [1, "first"] }
-    let(:n2) { [2, "second"] }
-    let(:n3) { [3, "third"] }
-    let(:n4) { [4, "forth"] }
-    let(:n5) { [5, "five"] }
+    let(:n1) { [1, [1, "first"]] }
+    let(:n2) { [2, [2, "second"]] }
+    let(:n3) { [3, [3, "third"]] }
+    let(:n4) { [4, [4, "forth"]] }
+    let(:n5) { [5, [5, "five"]] }
 
     context "with min heap" do
       it "works expectedly" do
