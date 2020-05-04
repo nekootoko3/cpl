@@ -4,3 +4,21 @@
 [![codecov](https://codecov.io/gh/nekootoko3/cpl_rb/branch/master/graph/badge.svg)](https://codecov.io/gh/nekootoko3/cpl_rb)
 
 competitive programming libraries for ruby
+
+## Libraries
+
+### Binomical Coefficients
+
+### Divisors
+
+### Priority Queue
+
+### Union Find Tree
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jack_analyzer.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
