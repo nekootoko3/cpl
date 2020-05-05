@@ -19,11 +19,20 @@ Style/Documentation:
 Style/EmptyMethod:
   Enabled: false
 
-Layout/SpaceAroundOperators:
-  Enabled: false
-
 Style/NumericPredicate:
   Enabled: false
 
 Style/WhenThen:
+  Enabled: false
+
+Style/LineLength:
+  Enabled: false
+
+Layout/SpaceAroundOperators:
+  Enabled: false
+
+Layout/CommentIndentation:
+  Enabled: false
+
+Naming/MethodParameterName:
   Enabled: false
