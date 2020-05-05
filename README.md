@@ -17,7 +17,7 @@ competitive programming libraries for ruby
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jack_analyzer.
+Bug reports and pull requests are welcome on GitHub at https://github.com/nekootoko3/cpl_rb
 
 ## License
 
