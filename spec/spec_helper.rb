@@ -22,7 +22,7 @@ if ENV['CI'] == 'true'
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 
-Dir[File.join(File.dirname(__FILE__), "../lib/**/*.rb")].each { |f| require f }
+Dir[File.join(File.dirname(__FILE__), "../lib/**/*.rb")].sort.each { |f| require f }
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
