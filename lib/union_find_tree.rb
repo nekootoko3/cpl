@@ -9,6 +9,10 @@ class UnionFindTree
     root_y = root(y)
     return if root_x == root_y
 
+
+
+
+
     if @rank[root_x] < @rank[root_y]
       @parent[root_x] = root_y
     else

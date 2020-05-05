@@ -1,5 +1,6 @@
 AllCops:
   TargetRubyVersion: 2.7
+  NewCops: enable
 
 Metrics:
   Enabled: false
@@ -25,7 +26,7 @@ Style/NumericPredicate:
 Style/WhenThen:
   Enabled: false
 
-Style/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Layout/SpaceAroundOperators:
