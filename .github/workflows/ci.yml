@@ -1,0 +1,36 @@
+name: CI
+
+on: [push]
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 2.7
+      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+      with:
+        ruby-version: 2.7
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
+    - name: Rubocop
+      run: bundle exec rubocop --format progress
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 2.7
+      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+      with:
+        ruby-version: 2.7
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
+    - name: Run tests
+      run: bundle exec rspec
