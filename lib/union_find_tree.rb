@@ -13,7 +13,7 @@ class UnionFindTree
       @parent[root_x] = root_y
     else
       @parent[root_y] = root_x
-      @rank[root_y] += 1 if @rank[root_x] == @rank[root_y]
+      @rank[root_x] += 1 if @rank[root_x] == @rank[root_y]
     end
   end
 
