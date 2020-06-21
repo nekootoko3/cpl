@@ -1,5 +1,8 @@
 class PriorityQueue
-  HEAP_TYPES = %i[min max].freeze
+  HEAP_TYPES = [:min, :max].freeze
+
+  attr_accessor :heap
+  attr_reader :heap_type
 
   # @param array [Array<Array<Integer, Any>|Integer>]
   # @param heap_type [Symbol]
@@ -7,82 +10,82 @@ class PriorityQueue
     raise ArgumentError, "heap type is invalid: #{heap_type}" unless HEAP_TYPES.include?(heap_type)
     raise ArgumentError, "array is invalid: #{array}" unless valid_array?(array)
 
-    @array = build_array(array)
+    @heap = build_array(array)
     @heap_type = heap_type
 
-    build_heap! unless @array.empty?
+    build_heap! unless heap.empty?
   end
 
   # @param value [Integer | Array<Integer, Any>]
   def push(value)
     v = value.is_a?(Array) ? value : [value]
-    @array << v
+    heap << v
 
-    current = @array.size - 1
+    current = heap.size - 1
     parent = (current - 1) / 2
     while parent >= 0
-      break if @heap_type == :min && @array[parent][0] < @array[current][0]
-      break if @heap_type == :max && @array[parent][0] > @array[current][0]
+      break if heap_type == :min && heap[parent][0] < heap[current][0]
+      break if heap_type == :max && heap[parent][0] > heap[current][0]
 
-      @array[current], @array[parent] = @array[parent], @array[current]
+      heap[current], heap[parent] = heap[parent], heap[current]
       parent, current = (current - 1) / 2, parent
     end
   end
 
   # @return [Integer | Array<Integer, Any>]
   def pop
-    return if @array.empty?
+    return if heap.empty?
 
-    res = @array.shift
+    res = heap.shift
 
-    unless @array.empty?
-      @array.unshift(@array.pop)
-      heapify!(0) unless @array.empty?
+    unless heap.empty?
+      heap.unshift(heap.pop)
+      heapify!(0) unless heap.empty?
     end
 
     res.size == 1 ? res[0] : res
   end
 
   def length
-    @array.size
+    heap.size
   end
   alias size length
 
   def empty?
-    @array.empty?
+    heap.empty?
   end
 
   private
 
   def build_heap!
-    (@array.size/2).downto(0) { |i| heapify!(i) }
+    (heap.size/2).downto(0) { |i| heapify!(i) }
   end
 
   def heapify!(current)
-    @heap_type == :min ? min_heapify!(current) : max_heapify!(current)
+    heap_type == :min ? min_heapify!(current) : max_heapify!(current)
   end
 
   def min_heapify!(current)
     left = current*2+1
     right = current*2+2
-    smallest_value = [@array[current][0], @array[left]&.fetch(0, nil), @array[right]&.fetch(0, nil)].compact.min
+    smallest_value = [heap[current][0], heap[left]&.fetch(0, nil), heap[right]&.fetch(0, nil)].compact.min
 
-    return if smallest_value == @array[current][0]
+    return if smallest_value == heap[current][0]
 
-    swap_idx = smallest_value == @array[left][0] ? left : right
-    @array[swap_idx], @array[current] = @array[current], @array[swap_idx]
+    swap_idx = smallest_value == heap[left][0] ? left : right
+    heap[swap_idx], heap[current] = heap[current], heap[swap_idx]
     min_heapify!(swap_idx)
   end
 
   def max_heapify!(current)
     left = current*2+1
     right = current*2+2
-    largest_value = [@array[current][0], @array[left]&.fetch(0, nil), @array[right]&.fetch(0, nil)].compact.max
+    largest_value = [heap[current][0], heap[left]&.fetch(0, nil), heap[right]&.fetch(0, nil)].compact.max
 
-    return if largest_value == @array[current][0]
+    return if largest_value == heap[current][0]
 
-    swap_idx = largest_value == @array[left][0] ? left : right
-    @array[swap_idx], @array[current] = @array[current], @array[swap_idx]
+    swap_idx = largest_value == heap[left][0] ? left : right
+    heap[swap_idx], heap[current] = heap[current], heap[swap_idx]
     max_heapify!(swap_idx)
   end
 
