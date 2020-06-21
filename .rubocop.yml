@@ -26,6 +26,9 @@ Style/NumericPredicate:
 Style/WhenThen:
   Enabled: false
 
+Style/SymbolArray:
+  Enabled: false
+
 Layout/LineLength:
   Enabled: false
 
