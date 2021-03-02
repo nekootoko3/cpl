@@ -5,7 +5,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 group :development, :test do
-  gem "codecov", "~> 0.1.17", require: false
+  gem "codecov", "~> 0.5.0", require: false
   gem "rake", "~> 13.0"
   gem "rspec", "~> 3.9"
 end
